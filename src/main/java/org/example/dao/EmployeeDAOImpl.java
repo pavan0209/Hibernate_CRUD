@@ -4,12 +4,10 @@ import org.example.entity.Employee;
 import org.example.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.util.Optional;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
-
-    private static final Logger logger = LoggerFactory.getLogger(EmployeeDAOImpl.class);
 
     @Override
     public void save(Employee employee) {
@@ -21,8 +19,24 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             tx.commit();
         } catch (Exception e) {
             if (tx != null) tx.rollback();
-            logger.error("Failed to save employee", e);
+            System.out.println("Failed to save employee " + e);
             throw new RuntimeException("Could not save employee", e);
+        }
+    }
+
+    @Override
+    public Optional<Employee> getById(int id) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Employee emp = session.find(Employee.class, id);
+            if (emp != null) {
+                System.out.println("Employee retrieved: " + emp);
+            } else {
+                System.out.println("Employee not found with id: " + id);
+            }
+            return Optional.ofNullable(emp);
+        } catch (Exception e) {
+            System.out.println("Failed to retrieve employee with id " + id + e);
+            throw new RuntimeException("Could not retrieve employee ", e);
         }
     }
 }

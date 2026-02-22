@@ -3,6 +3,8 @@ package org.example;
 import org.example.entity.Employee;
 import org.example.service.EmployeeService;
 
+import java.util.Optional;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -10,11 +12,15 @@ public class Main {
 
         // Add employee
         Employee employee = new Employee();
-        employee.setId(102);
-        employee.setName("Ganesh");
-        employee.setTechnology("Angular");
+        employee.setId(104);
+        employee.setName("Dipak");
+        employee.setTechnology("PHP");
 
         service.addEmployee(employee);
+
+        // Get
+        Optional<Employee> retrieved = service.fetchEmployee(104);
+        retrieved.ifPresent(emp -> System.out.println(retrieved.get()));
 
     }
 }
