@@ -22,5 +22,11 @@ public class Main {
         Optional<Employee> retrieved = service.fetchEmployee(104);
         retrieved.ifPresent(emp -> System.out.println(retrieved.get()));
 
+        // Update
+        retrieved.ifPresent(emp -> {
+            emp.setTechnology("Symphony");
+            service.updateEmployee(emp);
+        });
+
     }
 }

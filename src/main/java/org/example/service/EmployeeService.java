@@ -17,4 +17,8 @@ public class EmployeeService {
     public Optional<Employee> fetchEmployee(int id) {
         return employeeDAO.getById(id);
     }
+
+    public void updateEmployee(Employee employee) {
+        employeeDAO.update(employee);
+    }
 }

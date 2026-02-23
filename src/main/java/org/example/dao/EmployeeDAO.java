@@ -9,4 +9,6 @@ public interface EmployeeDAO {
     public void save(Employee employee);
 
     public Optional<Employee> getById(int id);
+
+    public void update(Employee employee);
 }

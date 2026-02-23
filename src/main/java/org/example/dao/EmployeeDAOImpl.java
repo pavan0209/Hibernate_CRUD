@@ -39,4 +39,19 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             throw new RuntimeException("Could not retrieve employee ", e);
         }
     }
+
+    @Override
+    public void update(Employee employee) {
+        Transaction tx = null;
+
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            tx = session.beginTransaction();
+            session.merge(employee);
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null) tx.rollback();
+            System.out.println("Failed to update employee " + e);
+            throw new RuntimeException("Could not update employee", e);
+        }
+    }
 }
