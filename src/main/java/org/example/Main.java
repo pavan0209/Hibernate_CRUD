@@ -28,5 +28,10 @@ public class Main {
             service.updateEmployee(emp);
         });
 
+        // Delete
+        retrieved.ifPresent(emp -> {
+            service.deleteEmployee(emp);
+//            System.out.println("Deleted employee" + emp);
+        });
     }
 }

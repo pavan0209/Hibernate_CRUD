@@ -21,4 +21,8 @@ public class EmployeeService {
     public void updateEmployee(Employee employee) {
         employeeDAO.update(employee);
     }
+
+    public void deleteEmployee(Employee emp) {
+        employeeDAO.delete(emp);
+    }
 }
