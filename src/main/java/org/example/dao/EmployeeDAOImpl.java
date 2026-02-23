@@ -27,12 +27,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public Optional<Employee> getById(int id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Employee emp = session.find(Employee.class, id);
-            if (emp != null) {
-                System.out.println("Employee retrieved: " + emp);
-            } else {
-                System.out.println("Employee not found with id: " + id);
-            }
+            Employee emp = session.find(Employee.class, 104);
+            Employee emp2 = session.find(Employee.class, 104);
+            System.out.println(emp2);
             return Optional.ofNullable(emp);
         } catch (Exception e) {
             System.out.println("Failed to retrieve employee with id " + id + e);
