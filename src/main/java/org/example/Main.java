@@ -12,14 +12,13 @@ public class Main {
 
         // Add employee
         Employee employee = new Employee();
-        employee.setId(104);
-        employee.setName("Dipak");
-        employee.setTechnology("PHP");
+        employee.setName("Arpit");
+        employee.setTechnology("Service Now");
 
         service.addEmployee(employee);
 
         // Get
-        Optional<Employee> retrieved = service.fetchEmployee(104);
+        Optional<Employee> retrieved = service.fetchEmployee(103);
         retrieved.ifPresent(emp -> System.out.println(retrieved.get()));
 
         // Update
