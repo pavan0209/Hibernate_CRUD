@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.entity.Employee;
 import org.example.entity.Project;
+import org.example.entity.Team;
 import org.example.entity.Workstation;
 import org.example.service.EmployeeService;
 
@@ -19,7 +20,6 @@ public class Main {
         Workstation workstation = new Workstation();
         workstation.setDeskNumber("A-1");
         workstation.setPcSerialNumber("MAC-01-2043");
-
         employee.setWorkstation(workstation);
 
         Project project1 = new Project();
@@ -35,10 +35,27 @@ public class Main {
         employee.addProject(project1);
         employee.addProject(project2);
 
+        // Teams
+        Team backend = new Team();
+        backend.setTeamName("Backend Team");
+        backend.setDepartment("Software");
+
+        Team frontend = new Team();
+        frontend.setTeamName("Frontend Team");
+        frontend.setDepartment("Software");
+
+        employee.addTeam(backend);
+        employee.addTeam(frontend);
+
         service.addEmployee(employee);
 
         Optional<Employee> retrieved = service.fetchEmployee(1);
-        retrieved.ifPresent(System.out::println);
+        retrieved.ifPresent((emp) -> {
+            System.out.println(emp);
+            System.out.println(emp.getWorkstation());
+            System.out.println(emp.getProjects());
+            System.out.println(emp.getTeams());
+        });
 
         retrieved.ifPresent(emp -> {
 

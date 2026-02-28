@@ -18,12 +18,23 @@ public class Employee {
 
     private String technology;
 
+    // One-to-One Workstation
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "workstation_id")
     private Workstation workstation;
 
+    // One-to-Many Projects
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private final List<Project> projects = new ArrayList<>();
+
+    // Many-to-Many Teams
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "employee_team",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "team_id")
+    )
+    private final List<Team> teams = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -67,14 +78,26 @@ public class Employee {
         project.setOwner(null);
     }
 
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public void addTeam(Team team) {
+        teams.add(team);
+        team.getEmployees().add(this);
+    }
+
+    public void removeTeam(Team team) {
+        teams.remove(team);
+        team.getEmployees().remove(this);
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", technology='" + technology + '\'' +
-                ", workstation=" + workstation +
-                ", projects=" + projects +
                 '}';
     }
 }
