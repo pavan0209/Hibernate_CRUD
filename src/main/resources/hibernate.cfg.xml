@@ -12,6 +12,7 @@
 
         <mapping class="org.example.entity.Employee"/>
         <mapping class="org.example.entity.Workstation"/>
+        <mapping class="org.example.entity.Project"/>
     </session-factory>
 
 </hibernate-configuration>

@@ -1,30 +1,32 @@
 package org.example.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.CascadeType;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Table(name = "employees")
 public class Employee {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
+
+    @Column(nullable = false)
     private String name;
+
     private String technology;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "workstation_id")
     private Workstation workstation;
 
-    public int getId() {
-        return id;
-    }
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private final List<Project> projects = new ArrayList<>();
 
-    public void setId(int id) {
-        this.id = id;
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -51,6 +53,20 @@ public class Employee {
         this.workstation = workstation;
     }
 
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void addProject(Project project) {
+        projects.add(project);
+        project.setOwner(this);
+    }
+
+    public void removeProject(Project project) {
+        projects.remove(project);
+        project.setOwner(null);
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -58,6 +74,7 @@ public class Employee {
                 ", name='" + name + '\'' +
                 ", technology='" + technology + '\'' +
                 ", workstation=" + workstation +
+                ", projects=" + projects +
                 '}';
     }
 }

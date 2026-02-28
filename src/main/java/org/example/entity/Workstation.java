@@ -3,15 +3,23 @@ package org.example.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "workstations")
 public class Workstation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
+
     private String deskNumber;
+
     private String pcSerialNumber;
+
     @OneToOne(mappedBy = "workstation")
     private Employee employee;
+
+    public Long getId() {
+        return id;
+    }
 
     public String getDeskNumber() {
         return deskNumber;
@@ -19,14 +27,6 @@ public class Workstation {
 
     public void setDeskNumber(String deskNumber) {
         this.deskNumber = deskNumber;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getPcSerialNumber() {
