@@ -6,7 +6,7 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
     public static final SessionFactory factory = new Configuration()
-            .addAnnotatedClass(Employee.class)
+            .configure()
             .buildSessionFactory();
 
     public static SessionFactory getSessionFactory() {
